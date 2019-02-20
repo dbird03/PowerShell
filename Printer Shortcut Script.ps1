@@ -7,6 +7,9 @@ This script creates Internet Explorer favorites out of printers' IP addresses on
     Version: 1.0
     Author: David Bird
     Creation Date: March 8, 2018
+
+.SOURCES
+http://powershellblogger.com/2016/01/create-shortcuts-lnk-or-url-files-with-powershell/
 #>
 
 # User-defined variables
