@@ -32,7 +32,7 @@ $ExchangeOnPremSession = New-PSSession -ConfigurationName Microsoft.Exchange -Co
 Import-PSSession $ExchangeOnPremSession
 
 # Remember to run the below command when finished!
-# Remove-PSSession $ExchangeLocalSession
+# Remove-PSSession $ExchangeOnPremSession
 }
 
 #--------[Exchange Online Session]--------
