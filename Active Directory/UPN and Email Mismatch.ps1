@@ -16,4 +16,4 @@ $SearchBase = "OU=Users,DC=contoso,DC=com"
 $ExportCsvLocation = "\\contoso.com\users\username\PowerShell\Exports\AD-Mismatch-$Date.csv"
 
 # Script
-Get-ADUser -Filter * -SearchBase $SearchBase -Properties EmailAddress | Where { $_.UserPrincipalName -ne $_.EmailAddress } | Select Name,SamAccountName,UserPrincipalName,EmailAddress | Export-Csv $ExportCsvLocation -NoTypeInformation
+Get-ADUser -Filter * -SearchBase $SearchBase -Properties EmailAddress | Where { $_.UserPrincipalName -ne $_.EmailAddress } | Select-Object Name,SamAccountName,UserPrincipalName,EmailAddress | Export-Csv $ExportCsvLocation -NoTypeInformation
