@@ -1,5 +1,5 @@
 <#
-.Synopsis
+.SYNOPSIS
    This script creates functions to connect to the different PSSessions commonly used by Microsoft system administrators.
 
 .DESCRIPTION
