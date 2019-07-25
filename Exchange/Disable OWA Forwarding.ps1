@@ -1,3 +1,8 @@
+# Get mailboxes that have forwarding enabled. ForwardingAddress is set by IT personnel in Exchange admin center
+# ForwardingSmtpAddress is set by the user in OWA
+$Mailboxes = Get-Mailbox -ResultSize Unlimited -Filter {((ForwardingSmtpAddress -ne $null) -or (ForwardingAddress -ne $null))}
+$Mailboxes | Select-Object Name,ForwardingAddress,ForwardingSmtpAddress
+
 # Create a new management role called "MyBaseOptions-DisableForwarding", copying the the "MyBaseOptions" management role
 New-ManagementRole -Name "MyBaseOptions-DisableForwarding" -Parent "MyBaseOptions"
 
