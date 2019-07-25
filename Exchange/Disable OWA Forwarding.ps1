@@ -1,3 +1,15 @@
+<#
+.Synopsis
+  Collection of one-liner commands for disabling Forwarding within Outlook on the web (OWA)
+
+.DESCRIPTION
+  Collection of one-liner commands for disabling Forwarding within Outlook on the web (OWA)
+
+.REFERENCE
+  https://blogs.technet.microsoft.com/exovoice/2017/12/07/disable-automatic-forwarding-in-office-365-and-exchange-server-to-prevent-information-leakage/
+  https://techcommunity.microsoft.com/t5/Exchange-Team-Blog/The-many-ways-to-block-automatic-email-forwarding-in-Exchange/ba-p/607579
+#>
+
 # Get mailboxes that have forwarding enabled. ForwardingAddress is set by IT personnel in Exchange admin center
 # ForwardingSmtpAddress is set by the user in OWA
 $Mailboxes = Get-Mailbox -ResultSize Unlimited -Filter {((ForwardingSmtpAddress -ne $null) -or (ForwardingAddress -ne $null))}
