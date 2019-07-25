@@ -3,6 +3,9 @@
 $Mailboxes = Get-Mailbox -ResultSize Unlimited -Filter {((ForwardingSmtpAddress -ne $null) -or (ForwardingAddress -ne $null))}
 $Mailboxes | Select-Object Name,ForwardingAddress,ForwardingSmtpAddress
 
+# Turn off forwarding on a user's mailbox (OWA and Exchange admin center)
+Get-Mailbox -Identity user@contoso.com | Set-Mailbox -DeliverToMailboxAndForward $False -ForwardingAddress $null -ForwardingSmtpAddress $null
+
 # Create a new management role called "MyBaseOptions-DisableForwarding", copying the the "MyBaseOptions" management role
 New-ManagementRole -Name "MyBaseOptions-DisableForwarding" -Parent "MyBaseOptions"
 
