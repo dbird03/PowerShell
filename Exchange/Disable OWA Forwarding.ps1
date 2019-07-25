@@ -1,0 +1,17 @@
+# Create a new management role called "MyBaseOptions-DisableForwarding", copying the the "MyBaseOptions" management role
+New-ManagementRole -Name "MyBaseOptions-DisableForwarding" -Parent "MyBaseOptions"
+
+# Remove the forwarding parameters from the "MyBaseOptions-DisableForwarding" management role
+Set-ManagementRoleEntry -Identity "MyBaseOptions-DisableForwarding\Set-Mailbox" -Parameters "DeliverToMailboxAndForward","ForwardingAddress","ForwardingSmtpAddress" -RemoveParameter
+
+# Verify the parameters are removed
+(Get-ManagementRoleEntry -Identity "MyBaseOptions-DisableForwarding\Set-Mailbox").parameters
+
+# Create the new role assignment policy called "Default Role Assignment Policy - Disable Forwarding" 
+New-RoleAssignmentPolicy -Name "Default Role Assignment Policy - Disable Forwarding" -Description "This policy grants end users the permission to set their options in Outlook on the web and perform other self-administration tasks. This policy removes the Forwarding option from Outlook on the web." -Roles "MyContactInformation","MyProfileInformation","My ReadWriteMailbox Apps","My Custom Apps","MyTextMessaging","MyVoiceMail","MyMailSubscriptions","MyBaseOptions-DisableForwarding","My Marketplace Apps","MyRetentionPolicies"
+
+# Set "Default Role Assignment Policy - Disable Forwarding" to be the default policy applied to all new mailboxes
+Set-RoleAssignmentPolicy -Identity "Default Role Assignment Policy - Disable Forwarding" -IsDefault
+
+# Get all existing mailboxes and change their role assignment policy to "Default Role Assignment Policy - Disable Forwarding"
+Get-Mailbox -ResultSize Unlimited | Set-Mailbox -RoleAssignmentPolicy "Default Role Assignment Policy - Disable Forwarding"
