@@ -1,9 +1,11 @@
 <#
 .Synopsis
-  Collection of one-liner commands for disabling Forwarding within Outlook on the web (OWA)
+  Collection of one-liner commands for disabling Forwarding within Outlook on the web (OWA).
 
 .DESCRIPTION
-  Collection of one-liner commands for disabling Forwarding within Outlook on the web (OWA)
+  Collection of one-liner commands for disabling Forwarding within Outlook on the web (OWA).
+  This does not cover disabling forwarding via inbox rules since this is accomplished by
+  Transport Rules and Remote Domains.
 
 .REFERENCE
   https://blogs.technet.microsoft.com/exovoice/2017/12/07/disable-automatic-forwarding-in-office-365-and-exchange-server-to-prevent-information-leakage/
@@ -35,3 +37,9 @@ Set-RoleAssignmentPolicy -Identity "Default Role Assignment Policy - Disable For
 
 # Get all existing mailboxes and change their role assignment policy to "Default Role Assignment Policy - Disable Forwarding"
 Get-Mailbox -ResultSize Unlimited | Set-Mailbox -RoleAssignmentPolicy "Default Role Assignment Policy - Disable Forwarding"
+
+# Get all mailbox plans and their role assignment policy
+Get-MailboxPlan | Select-Object DisplayName,RoleAssignmentPolicy
+
+# Set all mailbox plans to use the "Default Role Assignment Policy - Disable Forwarding" role assignment policy
+Get-MailboxPlan | Set-Mailbox -RoleAssignmentPolicy "Default Role Assignment Policy - Disable Forwarding"
