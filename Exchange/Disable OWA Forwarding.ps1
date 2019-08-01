@@ -41,5 +41,5 @@ Get-Mailbox -ResultSize Unlimited | Set-Mailbox -RoleAssignmentPolicy "Default R
 # Get all mailbox plans and their role assignment policy
 Get-MailboxPlan | Select-Object DisplayName,RoleAssignmentPolicy
 
-# Set all mailbox plans to use the "Default Role Assignment Policy - Disable Forwarding" role assignment policy
+# Set all mailbox plans to use the "Default Role Assignment Policy - Disable Forwarding" role assignment policy by default for new mailboxes
 Get-MailboxPlan | Set-MailboxPlan -RoleAssignmentPolicy "Default Role Assignment Policy - Disable Forwarding"
