@@ -14,16 +14,16 @@ $ReportSummary = Get-CimInstance -ComputerName $RDSLicensingServer -ClassName Wi
 $IssuedLicenses = Get-CimInstance -ComputerName $RDSLicensingServer -ClassName Win32_TSIssuedLicense | Sort-Object IssueDate -Descending | Select-Object @{name='Expires On';expression={$_.ExpirationDate}},@{name='Issued On';expression={$_.IssueDate}},@{name='License Status';expression={$_.LicenseStatus -replace "0","Unknown" -replace "1","Temporary" -replace "2","Active" -replace "3","Upgrade" -replace "4","Revoked" -replace "5","Pending" -replace "6","Concurrent"}},@{name='Issued To Computer';expression={$_.sIssuedToComputer}},@{name='Issued To User';expression={$_.sIssuedToUser}}
 
 # Convert the objects to HTML so they can be sent in the body of the email
-$ReportSummaryEmail = $ReportSummary | ConvertTo-Html   
-$IssuedLicensesEmail = $IssuedLicenses | ConvertTo-Html
+$ReportSummaryHtml = $ReportSummary | ConvertTo-Html   
+$IssuedLicensesHtml = $IssuedLicenses | ConvertTo-Html
 
 # Create the body of the email (formatted in HTML)
 $EmailBody = "
 <h1>RDS Report Summary</h1>
-$ReportSummaryEmail
+$ReportSummaryHtml
 <br>
 <h1>License Usage</h1>
-$IssuedLicensesEmail"
+$IssuedLicensesHtml"
 
 # Send email message
 $MailMessage = @{
