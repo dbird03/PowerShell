@@ -19,8 +19,10 @@ $IssuedLicensesEmail = $IssuedLicenses | ConvertTo-Html
 
 # Create the body of the email (formatted in HTML)
 $EmailBody = "
+<h1>RDS Report Summary</h1>
 $ReportSummaryEmail
 <br>
+<h1>License Usage</h1>
 $IssuedLicensesEmail"
 
 # Send email message
