@@ -7,8 +7,7 @@ function Get-ExternalForwardingInboxRules {
 .PARAMETER MAILBOXES
     Mailbox objects from the Get-Mailbox cmdlet.
 .EXAMPLE
-    PS C:\> $Mailboxes = Get-Mailbox -ResultSize Unlimited 
-    PS C:\> Get-ExternalForwardingInboxRules -Mailboxes $Mailboxes | Export-Csv -Path "C:\ExternalForwardingInboxRules.csv"
+    PS C:\> Get-ExternalForwardingInboxRules -Mailboxes (Get-Mailbox -ResultSize Unlimited) | Export-Csv -Path "C:\ExternalForwardingInboxRules.csv"
     Gets the external forwarding rules from all mailboxes and exports them to a csv file.
 .LINK
     https://gcits.com/knowledge-base/find-inbox-rules-forward-mail-externally-office-365-powershell/
