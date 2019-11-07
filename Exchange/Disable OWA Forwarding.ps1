@@ -5,7 +5,7 @@
 .DESCRIPTION
   Collection of one-liner commands for disabling Forwarding within Outlook on the web (OWA).
   This does not cover disabling forwarding via inbox rules since this is accomplished by
-  Transport Rules and Remote Domains.
+  Mail Flow rules or Remote Domains settings.
 
 .REFERENCE
   https://blogs.technet.microsoft.com/exovoice/2017/12/07/disable-automatic-forwarding-in-office-365-and-exchange-server-to-prevent-information-leakage/
