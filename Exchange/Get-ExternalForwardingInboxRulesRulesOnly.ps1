@@ -6,8 +6,8 @@ function Get-ExternalForwardingInboxRulesRulesOnly {
     Checks the inbox rules of mailboxes for rules that are forwarding externally.
 .PARAMETER InboxRules
     Mailbox objects from the Get-Mailbox cmdlet.
-.PARAMETER ExternalOnly
-    Only return rules forwarding to external domains (future feature not supported yet).
+.PARAMETER AcceptedDomains
+    An array of domains that are considered to be internal domains and acceptable to forward emails to.
 .EXAMPLE
     PS C:\> $Mailboxes = Get-Mailbox -ResultSize Unlimited    
     PS C:\> $Mailboxes | ForEach-Object { $InboxRules += Get-InboxRule –Mailbox $_.alias }
