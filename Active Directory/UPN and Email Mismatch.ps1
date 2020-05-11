@@ -9,11 +9,10 @@ This script exports a csv file of AD users in a specified OU whose userPrincipal
 
 #>
 
-
 # User-defined variables
 $Date = Get-Date -UFormat "%Y-%m-%d"
 $SearchBase = "OU=Users,DC=contoso,DC=com"
 $ExportCsvLocation = "\\contoso.com\users\username\PowerShell\Exports\AD-Mismatch-$Date.csv"
 
 # Script
-Get-ADUser -Filter * -SearchBase $SearchBase -Properties EmailAddress | Where { $_.UserPrincipalName -ne $_.EmailAddress } | Select-Object Name,SamAccountName,UserPrincipalName,EmailAddress | Export-Csv $ExportCsvLocation -NoTypeInformation
+Get-ADUser -Filter * -SearchBase $SearchBase -Properties EmailAddress | Where-Object { $_.UserPrincipalName -ne $_.EmailAddress } | Select-Object Name,SamAccountName,UserPrincipalName,EmailAddress | Export-Csv $ExportCsvLocation -NoTypeInformation
