@@ -2,12 +2,19 @@
 .Synopsis
     Sends an email report of RDS license usage.
 .DESCRIPTION
-    Sends an email report of RDS license usage.
+    Sends an email report of RDS license usage. This script should be copied locally to the RDS Licensing server
+    and called in a Scheduled Task on the server.
+.NOTES
+    Author: David Bird
+    Created: August 2, 2019
 #>
+# Variables
+$TimeStamp = Get-Date -UFormat "%A, %B%e, %Y %r"
 
 # User-defined variables
 $RDSLicensingServer = "RDS01" # Server where the RDS Licenses are installed
-$SmtpServer         = "smtp-relay.contoso.com" # Smtp relay server used to send emails
+$SmtpServer         = "smtp.contoso.com" # Smtp relay server used to send emails
+$To                 = "admin@contoso.com" # Recipients that should receive the email report
 
 # Get the installed licenses and issued licenses from the RDS Licensing server
 $ReportSummary = Get-CimInstance -ComputerName $RDSLicensingServer -ClassName Win32_TSLicenseKeyPack | Sort-object ProductVersion | Select-Object  ProductVersion,TypeAndModel,@{name='License Program';expression={$_.KeyPackType -replace "0","Unknown" -replace "1","Retail Purchase" -replace "2","Volume Purchase" -replace "3","Concurrent License" -replace "4","Temporary" -replace "5","Open License" -replace "6","Built-in" -replace "8","Built-in OverUsed"}},@{name='Total Licenses';expression={$_.TotalLicenses}},@{name='Available';expression={$_.AvailableLicenses}},@{name='Issued';expression={$_.IssuedLicenses}},@{name='Expiry Date';expression={$_.ExpirationDate}},@{name='Keypack ID';expression={$_.KeyPackId}}
@@ -19,17 +26,20 @@ $IssuedLicensesHtml = $IssuedLicenses | ConvertTo-Html
 
 # Create the body of the email (formatted in HTML)
 $EmailBody = "
-<h1>RDS Report Summary</h1>
+<h1>$RDSLicensingServer - RDS License Report</h1>
+$TimeStamp
+<br>
+<h2>License Report Summary</h2>
 $ReportSummaryHtml
 <br>
-<h1>License Usage</h1>
+<h2>License Usage</h2>
 $IssuedLicensesHtml"
 
 # Send email message
 $MailMessage = @{
-    To                         = "admin@contoso.com"
+    To                         = $To
     From                       = "$RDSLicensingServer@contoso.com"
-    Subject                    = "RDS License Report"
+    Subject                    = "$RDSLicensingServer - RDS License Report - $TimeStamp"
     Body                       = $EmailBody
     BodyAsHtml                 = $True
     Port                       = "587"
