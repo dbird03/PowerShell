@@ -1,18 +1,14 @@
 function Get-TroubleshootingLogFile {
 <#
 .SYNOPSIS
-    Short description
+    Returns log files modified within a time range.
 .DESCRIPTION
-    Long description
+    Returns log files modified within a time range.
 .EXAMPLE
-    PS C:\> <example usage>
-    Explanation of what the example does
-.INPUTS
-    Inputs (if any)
-.OUTPUTS
-    Output (if any)
+    PS C:\> Get-TroubleshootingLogFile -ComputerName 'localhost' -StartTime '05-19-2020 08:00' -EndTime '05-19-2020 14:00'
+    Returns log files modified on the localhost between 05/09/2020 8:00 AM and 2:00 PM.
 .NOTES
-    General notes
+    This function is created by Adam Bertram as part of his PluralSight course "PowerShell Toolmaking Fundamentals".
 #>
     [CmdletBinding()]
     param (
