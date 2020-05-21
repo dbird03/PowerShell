@@ -54,7 +54,8 @@ function Get-GPResultantSetOfPolicyReport {
     )
     
     process {
-        $Date = Get-Date -UFormat "%Y-%m-%d %I%M%S%p"
+        # Date Format example: 2020-05-20 14 00 00 PM
+        $Date = Get-Date -UFormat "%Y-%m-%d %H %M %S %p"
         $ExportPath = "$Path\GPOResult $Date $User on $Computer.html"
 
         if ($Comment) {
