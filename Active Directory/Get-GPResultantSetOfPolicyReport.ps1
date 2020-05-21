@@ -7,9 +7,9 @@ function Get-GPResultantSetOfPolicyReport {
     comment in the file name of the HTML report.
 
     The file name of the HTML report is:
-    "GPOResult $Date $User on $Computer.html" (if the Comment parameter is not used)
+    "GPResults $Date $User on $Computer.html" (if the Comment parameter is not used)
 
-    "GPOResult $Date $User on $Computer $Comment.html" (if the Comment parameter is not used)
+    "GPResults $Date $User on $Computer $Comment.html" (if the Comment parameter is not used)
 .PARAMETER User
     The username of the user Resultant Set of Policy against.
 .PARAMETER Computer
@@ -56,10 +56,10 @@ function Get-GPResultantSetOfPolicyReport {
     process {
         # Date Format example: 2020-05-20 14 00 00 PM
         $Date = Get-Date -UFormat "%Y-%m-%d %H %M %S %p"
-        $ExportPath = "$Path\GPOResult $Date $User on $Computer.html"
+        $ExportPath = "$Path\GPResults $Date $User on $Computer.html"
 
         if ($Comment) {
-            $ExportPath = "$Path\GPOResult $Date $User on $Computer $Comment.html"
+            $ExportPath = "$Path\GPResults $Date $User on $Computer $Comment.html"
         }
         Write-Verbose "Generating Group Policy Resultant Set of Policy for $($User) on $($Computer)..."
         Get-GPResultantSetOfPolicy -User $User -Computer $Computer -Path $ExportPath -ReportType 'Html'
