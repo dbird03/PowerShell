@@ -20,10 +20,10 @@ function Get-GPResultantSetOfPolicyReport {
     A comment you want to specify in the file name of the HTML report. This can be helpful in troubleshooting such as "Baseline GPO report" or
     "After modifying Windows Desktop Default Policy GPO".
 .EXAMPLE
-    PS C:\> Get-GPRSoP -User jsmith -Computer JSMITH-LAPTOP
+    PS C:\> Get-GPResultantSetOfPolicyReport -User jsmith -Computer JSMITH-LAPTOP
     Generates a RSoP report for user jsmith logged on to the computer JSMITH-LAPTOP.
 
-    PS C:\> Get-GPRSoP -User admin -Computer RDSHOST01 -Comment "Before changing RDS GPO"
+    PS C:\> Get-GPResultantSetOfPolicyReport -User admin -Computer RDSHOST01 -Comment "Before changing RDS GPO"
     Generates a RSoP report for user admin logged on to the computer RDSHOST01 and includes the comment in the file name.
 .INPUTS
     This function does not take any object as input.
