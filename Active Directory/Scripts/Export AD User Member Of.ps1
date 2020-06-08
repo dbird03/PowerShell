@@ -1,0 +1,2 @@
+﻿$User = Read-Host "Please enter the user's AD account name"
+Get-ADUser $User -Properties MemberOf | Select-Object -ExpandProperty MemberOf | Get-ADGroup -Properties Name,Description | Select-Object Name,Description | Sort-Object Name | Export-Csv "C:\Temp\AD User Member Of - $User.csv" -NoTypeInformation
