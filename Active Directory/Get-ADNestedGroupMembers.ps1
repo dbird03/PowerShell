@@ -40,7 +40,7 @@ param (
       return $List 
     } 
      
-$modules = get-module | select -expand name
+$modules = get-module | Select-Object -expand name
     if ($modules -contains "ActiveDirectory") 
     { 
         $table = $null 
@@ -48,7 +48,7 @@ $modules = get-module | select -expand name
         $adgroupname = $null     
         $nesting++   
         $ADGroupname = get-adgroup $groupname -properties memberof,members 
-        $memberof = $adgroupname | select -expand memberof 
+        $memberof = $adgroupname | Select-Object -expand memberof 
         write-verbose "Checking group: $($adgroupname.name)" 
         if ($adgroupname) 
         {  
@@ -59,10 +59,10 @@ $modules = get-module | select -expand name
             } 
             else 
             { 
-                $nestedMembers = Get-ADGroupMember -Identity $GroupName | sort objectclass -Descending
+                $nestedMembers = Get-ADGroupMember -Identity $GroupName | Sort-Object objectclass -Descending
                 if (!($nestedmembers))
                 {
-                    $unknown = $ADGroupname | select -expand members
+                    $unknown = $ADGroupname | Select-Object -expand members
                     if ($unknown)
                     {
                         $nestedmembers=@()
@@ -88,11 +88,11 @@ $modules = get-module | select -expand name
                     $table.displayname = $nestedadmember.displayname
                     if ($indent) 
                     { 
-                    indent $table | select @{N="Name";E={"$($_.name)  ($($_.displayname))"}}
+                    indent $table | Select-Object @{N="Name";E={"$($_.name)  ($($_.displayname))"}}
                     } 
                     else 
                     { 
-                    $table | select type,name,displayname,parentgroup,nesting,enabled,dn,comment 
+                    $table | Select-Object type,name,displayname,parentgroup,nesting,enabled,dn,comment 
                     } 
                 } 
                 elseif ($nestedmember.objectclass -eq "group") 
@@ -106,7 +106,7 @@ $modules = get-module | select -expand name
                     } 
                     if ($indent) 
                     { 
-                    indent $table | select name,comment | %{
+                    indent $table | Select-Object name,comment | ForEach-Object{
 						
 						if ($_.comment -ne "")
 						{
@@ -124,7 +124,7 @@ $modules = get-module | select -expand name
 					}
                     else 
                     { 
-                    $table | select type,name,displayname,parentgroup,nesting,enabled,dn,comment 
+                    $table | Select-Object type,name,displayname,parentgroup,nesting,enabled,dn,comment 
                     } 
                     if ($indent) 
                     { 
@@ -144,11 +144,11 @@ $modules = get-module | select -expand name
                         $table = new-object psobject -property $props
                         if ($indent) 
                         { 
-    	                    indent $table | select name 
+    	                    indent $table | Select-Object name 
                         } 
                         else 
                         { 
-                        $table | select type,name,displayname,parentgroup,nesting,enabled,dn,comment    
+                        $table | Select-Object type,name,displayname,parentgroup,nesting,enabled,dn,comment    
                         } 
                      }
                 } 
