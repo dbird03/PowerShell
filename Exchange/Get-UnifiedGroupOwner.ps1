@@ -18,8 +18,8 @@ function Get-UnifiedGroupOwner {
     )
     
     process {
-        foreach ($Object in $Identity) {
-            Get-UnifiedGroupLinks -Identity $Object -LinkType Owners
+        foreach ($Item in $Identity) {
+            Get-UnifiedGroupLinks -Identity $Item -LinkType Owners
         }
     }
     
