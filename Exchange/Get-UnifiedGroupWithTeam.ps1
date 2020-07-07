@@ -3,7 +3,8 @@ function Get-UnifiedGroupWithTeam {
 .SYNOPSIS
     Gets Office 365 Group
 .DESCRIPTION
-    Long description
+    Takes the Name of an Office 365 Group and checks the ResourceProvisioningOptions property to see if it contains 'Teams' and outputs the
+    entire Office 365 Group if true.
 .EXAMPLE
     PS C:\> $AllUnifiedGroups = (Get-UnifiedGroup).Name 
     PS C:\> Get-UnifiedGroupWithTeam -Name $AllUnifiedGroups    
