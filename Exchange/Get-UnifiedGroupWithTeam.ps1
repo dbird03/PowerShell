@@ -8,7 +8,10 @@ function Get-UnifiedGroupWithTeam {
 .EXAMPLE
     PS C:\> $AllUnifiedGroups = (Get-UnifiedGroup).Name 
     PS C:\> Get-UnifiedGroupWithTeam -Name $AllUnifiedGroups    
-    Gets all Office 365 Groups and then passes them to Get-UnifiedGroupWithTeam to select only the groups with a Teams team provisioned.
+    Gets the Name property of all Office 365 Groups then uses Get-UnifiedGroupWithTeam to select only the groups with a Teams team provisioned.
+.EXAMPLE
+    PS C:\> (Get-UnifiedGroup).Name | Get-UnifiedGroupWithTeam
+    Gets the Name property of all Office 365 Groups and then pipes them to Get-UnifiedGroupWithTeam to select only the groups with a Teams team provisioned.
 .PARAMETER Name
     The Name property of the Office 365 Group
 .INPUTS
@@ -20,6 +23,9 @@ function Get-UnifiedGroupWithTeam {
 #>
     [CmdletBinding()]
     param (
+        [Parameter(
+            Mandatory = $True,
+            ValueFromPipeline = $True)]
         [string[]]$Name
     )
 
