@@ -181,7 +181,10 @@ function Connect-O365SecurityAndComplianceSession {
             Credential        = $Credential
         }
         $O365SecurityAndComplianceSession = New-PSSession @params
-        Import-PSSession $O365SecurityAndComplianceSession -DisableNameChecking
+        # I don't know why Import-Module or the -Global switch is needed to make this work, but the powershell.org link below
+        # is where I found this solution. If you don't use this, the commands in the remote session do not work.
+        # https://powershell.org/forums/topic/connect-to-exchange-function-in-module-not-persistent/
+        Import-Module (Import-PSSession $O365SecurityAndComplianceSession -DisableNameChecking) -Global -DisableNameChecking -Force
     }
 
 }
