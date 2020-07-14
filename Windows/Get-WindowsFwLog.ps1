@@ -156,7 +156,7 @@ function Get-WindowsFwLog {
         if ($PSBoundParameters.ContainsKey("End"))
         {
             Write-Verbose -Message "Filtering log on end datetime: $End"
-            $LogEntries = $LogEntries | Where-Object DateTime -ge $End
+            $LogEntries = $LogEntries | Where-Object DateTime -le $End
         }
 
         if ($PSBoundParameters.ContainsKey("Start") -or $PSBoundParameters.ContainsKey("End") -or $PSBoundParameters.ContainsKey("SearchString"))
