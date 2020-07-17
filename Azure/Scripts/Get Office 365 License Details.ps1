@@ -13,6 +13,9 @@
 .NOTES
     Created: July 17, 2020
     Author: David Bird
+    References:
+    https://mymicrosoftexchange.wordpress.com/2015/03/23/office-365-script-to-get-detailed-report-of-assigned-licenses/
+    https://gallery.technet.microsoft.com/scriptcenter/Export-a-Licence-b200ca2a
 #>
 
 $VerbosePreference = "Continue"
