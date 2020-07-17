@@ -22,7 +22,7 @@ $VerbosePreference = "Continue"
 
 # Get all AccountSkus (Ex: Contoso:ENTERPRISEPACK, Contoso:ENTERPRISEPREMIUM, etc.) in the tenant that have at least one licensed assigned to a user
 Write-Verbose "Getting all AccountSkus..."
-$AccountSkus = Get-MsolAccountSku | Where {$_.ConsumedUnits -ge 1}
+$AccountSkus = Get-MsolAccountSku | Where-Object {$_.ConsumedUnits -ge 1}
 
 # Enumerate through each AccountSku
 foreach ($AccountSku in $AccountSkus) {
