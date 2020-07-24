@@ -1,15 +1,15 @@
-function Get-TeamOwner {
+function Get-TeamOwnerReport {
 <#
 .SYNOPSIS
     Gets Team Owner(s) of a Microsoft Teams team.
 .DESCRIPTION
     Gets Team Owner(s) of a Microsoft Teams team.
 .EXAMPLE
-    PS C:\> Get-TeamOwner -GroupId 'abcdefgh-hijk-lmno-pqrs-tuvwxyz12345'
+    PS C:\> Get-TeamOwnerReport -GroupId 'abcdefgh-hijk-lmno-pqrs-tuvwxyz12345'
     Gets the Team Owner(s) of the Team with Group Id 'abcdefgh-hijk-lmno-pqrs-tuvwxyz12345'
 .EXAMPLE
     PS C:\> $AllTeamsGroupIds = (Get-Team).GroupId
-    PS C:\> Get-TeamOwner -GroupId $AllTeamsGroupIds
+    PS C:\> Get-TeamOwnerReport -GroupId $AllTeamsGroupIds
     Gets the GroupIds for all Teams and then gets the Team Owner(s) of each GroupId
 .INPUTS
     System.String
