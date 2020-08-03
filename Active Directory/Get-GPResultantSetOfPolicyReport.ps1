@@ -65,7 +65,7 @@ function Get-GPResultantSetOfPolicyReport {
         The If block below is not processing correctly. If $ExportPath is greater than 260, it does not execute Write-Error or Exit.
         Instead, it continues and executes both Write-Verbose commands and then Get-GPResultantSetOfPolicy.
         #>
-        if ($ExportPath -ge 260) {
+        if ($ExportPath.Length -ge 260) {
             Write-Error "Error: Full export path of report is greater than 260 characters. Please choose a different path or shorter comment if using the -Comment parameter."
             Exit
         }
