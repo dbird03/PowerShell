@@ -61,7 +61,15 @@ function Get-GPResultantSetOfPolicyReport {
         if ($Comment) {
             $ExportPath = "$Path\GPResults $Date $User on $Computer $Comment.html"
         }
+
+        if ($ExportPath.Length -ge 260) {
+            Write-Error "Error: Full export path of report is greater than 260 characters. Please choose a different path or shorter comment if using the -Comment parameter."
+            Exit
+        }
+
         Write-Verbose "Generating Group Policy Resultant Set of Policy for $($User) on $($Computer)..."
+        Write-Verbose "Report path: $($ExportPath)"
         Get-GPResultantSetOfPolicy -User $User -Computer $Computer -Path $ExportPath -ReportType 'Html'
+
     }
 }
