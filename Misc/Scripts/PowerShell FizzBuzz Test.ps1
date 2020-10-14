@@ -19,22 +19,22 @@ foreach ($Value in $Values) {
 
     # If the value is a multiple of 3 and 5, print FizzBuzz
     if ($Value % 3 -eq 0 -and $Value % 5 -eq 0) {
-        Write-Host "FizzBuzz" -ForegroundColor Green
+        Write-Output "FizzBuzz"
     }
 
     # If the value is a multiple of 3, print Fizz
     if ($Value % 3 -eq 0) {
-        Write-Host "Fizz" -ForegroundColor Green
+        Write-Output "Fizz"
     }
 
     # If the value is a multiple of 5, print Buzz
     if ($Value % 5 -eq 0) {
-        Write-Host "Buzz" -ForegroundColor Green
+        Write-Output "Buzz"
     }
 
     # Else print the value
     else {
-        Write-Host "$($Value)" -ForegroundColor Green
+        Write-Output "$($Value)"
     }
 
 }
