@@ -16,12 +16,8 @@ function Get-TeamsAppInstallationReport {
     This function uses the Get-TeamsAppInstallation cmdlet which uses the Microsoft Graph Beta and is only available in the
     MicrosoftTeams version 1.1.3-preview module.
 #>
-
-#Requires -Modules @{ ModuleName="MicrosoftTeams"; RequiredVersion="1.1.3" }
-
     [CmdletBinding()]
     param (
-        
     )
     
     begin {
@@ -52,8 +48,5 @@ function Get-TeamsAppInstallationReport {
             }
         }
     }
-    
-    end {
-        
-    }
+
 }
