@@ -19,6 +19,12 @@ function Enable-MsolUserLicenseServicePlan {
         The AccountSkuId of the user's license. Run the Get-MsolAccountSku for a list of account skus.
     .PARAMETER ServicePlanName
         The ServicePlanName of the service plan to enable.
+    .LINK
+        https://docs.microsoft.com/en-us/azure/active-directory/enterprise-users/licensing-service-plan-reference
+    .LINK
+        https://docs.microsoft.com/en-us/microsoft-365/enterprise/view-licenses-and-services-with-microsoft-365-powershell?view=o365-worldwide
+    .LINK
+        https://docs.microsoft.com/en-us/microsoft-365/enterprise/view-account-license-and-service-details-with-microsoft-365-powershell?view=o365-worldwide
     .NOTES
         Created: January 6, 2021
         Author: David Bird
