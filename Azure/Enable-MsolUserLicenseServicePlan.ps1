@@ -19,6 +19,10 @@ function Enable-MsolUserLicenseServicePlan {
         The AccountSkuId of the user's license. Run the Get-MsolAccountSku for a list of account skus.
     .PARAMETER ServicePlanName
         The ServicePlanName of the service plan to enable.
+    .INPUTS
+        None
+    .OUTPUTS
+        None
     .LINK
         https://docs.microsoft.com/en-us/azure/active-directory/enterprise-users/licensing-service-plan-reference
     .LINK
@@ -28,6 +32,8 @@ function Enable-MsolUserLicenseServicePlan {
     .NOTES
         Created: January 6, 2021
         Author: David Bird
+
+        Requires you to be connected to the Msol Service before running this command by running Connect-MsolService.
     #>
     [CmdletBinding(SupportsShouldProcess=$True,ConfirmImpact='High')]
     param (
