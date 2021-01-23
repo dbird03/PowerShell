@@ -64,9 +64,11 @@ function Disable-MsolUserLicenseServicePlan {
              # 2. The -DisabledPlans parameter of New-MsolLicenseOptions uses the type: List<T>[String]
              #>
              Write-Verbose -Message "Getting DisabledPlans"
-             [System.Collections.Generic.List[string]]$DisabledPlans = $License.ServiceStatus | Where-Object { $_.ProvisioningStatus -eq 'Disabled'} | Select-Object -ExpandProperty 'ServicePlan' | Select-Object -ExpandProperty 'ServiceName'
-             
-             Write-Verbose -Message "DisabledPlans: $($DisabledPlans)"
+             [System.Collections.Generic.List[string]]$DisabledPlans = $License.ServiceStatus | Where-Object { $_.ProvisioningStatus -eq 'Disabled'} | Select-Object -ExpandProperty 'ServicePlan' | Sort-Object -Property 'ServiceName' | Select-Object -ExpandProperty 'ServiceName'
+             Write-Verbose -Message "DisabledPlans:"
+             foreach ($DisabledPlan in $DisabledPlans) {
+                 Write-Verbose -Message "    $($DisabledPlan)"
+             }
 
         # Check if the ServicePlanName is in $DisabledPlans
         if ($DisabledPlans -contains $ServicePlanName) {
@@ -75,7 +77,10 @@ function Disable-MsolUserLicenseServicePlan {
         else {
             Write-Verbose -Message "DisabledPlans does not contains $($ServicePlanName). Adding $($ServicePlanName) to Disabled Plans."
             $DisabledPlans.Add($ServicePlanName)
-            Write-Verbose -Message "New DisabledPlans: $($DisabledPlans)"
+            Write-Verbose -Message "New DisabledPlans:"
+            foreach ($DisabledPlan in $DisabledPlans) {
+                Write-Verbose -Message "    $($DisabledPlan)"
+            }
             if ($PSCmdlet.ShouldProcess("$UserPrincipalName", "Disable $($ServicePlanName) service plan in $($AccountSkuId) license")) {
                 # Create the new license options
                 $LicenseOptions = New-MsolLicenseOptions -AccountSkuId $AccountSkuId -DisabledPlans $DisabledPlans
