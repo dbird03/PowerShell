@@ -51,8 +51,14 @@ function Enable-MsolUserLicenseServicePlan {
     process {
         # Get the Msol user
         Write-Verbose -Message "Getting MsolUser $($UserPrincipalName)"
-        $MsolUser = Get-MsolUser -UserPrincipalName $UserPrincipalName
-
+        # Try getting the Msol user. If there are any errors, stop the script and throw the error message.
+        try {
+            $MsolUser = Get-MsolUser -UserPrincipalName $UserPrincipalName -ErrorAction Stop
+        }
+        catch {
+            throw
+        }
+        
         # Get the license details of the Msol user
         Write-Verbose -Message "Getting license $($AccountSkuId)"
         $License = $MsolUser.Licenses | Where-Object { $_.AccountSkuId -eq $AccountSkuId }
