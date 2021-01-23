@@ -62,6 +62,10 @@ function Enable-MsolUserLicenseServicePlan {
         # Get the license details of the Msol user
         Write-Verbose -Message "Getting license $($AccountSkuId)"
         $License = $MsolUser.Licenses | Where-Object { $_.AccountSkuId -eq $AccountSkuId }
+        # Throw an error if no license was found for the AccountSkuId
+        if (!$License) {
+            throw "$($AccountSkuId) AccountSkuId not found for $($UserPrincipalName)"
+        }
 
         # Create an array of disabled ServicePlans in the license
             <#
