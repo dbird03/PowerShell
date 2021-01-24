@@ -59,26 +59,32 @@ function Disable-MsolUserLicenseServicePlan {
             throw
         }
         
-        # Get the license details of the Msol user
+        # Get the AccountSku license details of the Msol user
         Write-Verbose -Message "Getting license $($AccountSkuId)"
         $License = $MsolUser.Licenses | Where-Object { $_.AccountSkuId -eq $AccountSkuId }
-        # Throw an error if no license was found for the AccountSkuId
+        # Verify a license was found for the AccountSkuId. Throw an terminating error if a license is not found.
         if (!$License) {
             throw "$($AccountSkuId) AccountSkuId not found for $($UserPrincipalName)"
         }
+        # Verify the license of the AccountSkuId contains the ServicePlanName. Throw a terminating error if the ServicePlanName is not found.
+        Write-Verbose -Message "Verifying $($AccountSkuId) contains $($ServicePlanName)"
+        $LicenseServicePlans = $License.ServiceStatus.ServicePlan.ServiceName
+        if ($LicenseServicePlans -notcontains $ServicePlanName) {
+            throw "$($AccountSkuId) does not contain $($ServicePlanName)"
+        }
 
         # Create an array of disabled ServicePlans in the license
-            <#
-             # The [System.Collections.Generic.List[string]] type is needed because:
-             # 1. It supports the .Add() method below in the Else construct
-             # 2. The -DisabledPlans parameter of New-MsolLicenseOptions uses the type: List<T>[String]
-             #>
-             Write-Verbose -Message "Getting DisabledPlans"
-             [System.Collections.Generic.List[string]]$DisabledPlans = $License.ServiceStatus | Where-Object { $_.ProvisioningStatus -eq 'Disabled'} | Select-Object -ExpandProperty 'ServicePlan' | Sort-Object -Property 'ServiceName' | Select-Object -ExpandProperty 'ServiceName'
-             Write-Verbose -Message "DisabledPlans:"
-             foreach ($DisabledPlan in $DisabledPlans) {
-                 Write-Verbose -Message "    $($DisabledPlan)"
-             }
+        <#
+         # The [System.Collections.Generic.List[string]] type is needed because:
+         # 1. It supports the .Add() method below in the Else construct
+         # 2. The -DisabledPlans parameter of New-MsolLicenseOptions uses the type: List<T>[String]
+         #>
+        Write-Verbose -Message "Getting DisabledPlans"
+        [System.Collections.Generic.List[string]]$DisabledPlans = $License.ServiceStatus | Where-Object { $_.ProvisioningStatus -eq 'Disabled'} | Select-Object -ExpandProperty 'ServicePlan' | Sort-Object -Property 'ServiceName' | Select-Object -ExpandProperty 'ServiceName'
+        Write-Verbose -Message "DisabledPlans:"
+        foreach ($DisabledPlan in $DisabledPlans) {
+            Write-Verbose -Message "    $($DisabledPlan)"
+        }
 
         # Check if the ServicePlanName is in $DisabledPlans
         if ($DisabledPlans -contains $ServicePlanName) {
