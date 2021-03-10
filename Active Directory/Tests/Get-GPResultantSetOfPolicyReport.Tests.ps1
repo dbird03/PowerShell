@@ -58,7 +58,13 @@ Describe "Get-GPResultantSetOfPolicyReport" {
         }
         It "Should save the file in the Path parameter's value if using the Path parameter" -Pending {
         }
-        It "Should have the date in the file name" -Pending {
+        It "Should have the date in the file name" {
+            function Get-GPResultantSetOfPolicy {}
+            Mock -CommandName Get-GPResultantSetOfPolicy -MockWith { New-Item -Path $ExportPath }
+            Mock -CommandName Get-Date -MockWith { '2007-06-19 08 00 00 AM' }
+
+            Get-GPResultantSetOfPolicyReport -User 'jsmith' -Computer 'jsmith-laptop' -Path $TestDrive -Verbose
+            Get-ChildItem $TestDrive | Select-Object -ExpandProperty 'Name' | Should -BeLikeExactly "*2007-06-19 08 00 00 AM*"
         }
         It "Should have the User parameter's value in the file name" -Pending {
         }
