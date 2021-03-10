@@ -1,4 +1,4 @@
-#Requires -Module Pester
+#Requires -Module @{ ModuleName = 'Pester'; RequiredVersion = '4.10.1 ' }
 
 # Load the Get-GPResultantSetOfPolicyReport function
 $here = $PSScriptRoot
@@ -7,11 +7,6 @@ $sut = Split-Path $here -Parent
 
 Describe "Get-GPResultantSetOfPolicyReport" {
     Context "Parameters" {
-        BeforeAll {
-            Mock -CommandName Get-GPResultantSetOfPolicy -MockWith {
-                Return 1
-            }
-        }
         It "User parameter should exist"  {
             Get-Command Get-GPResultantSetOfPolicyReport | Should -HaveParameter User
         }
@@ -49,12 +44,24 @@ Describe "Get-GPResultantSetOfPolicyReport" {
             Get-Command Get-GPResultantSetOfPolicyReport | Should -HaveParameter Comment -Not -Mandatory
         }
     }
-    Context "ContextName" {
-        It "ItName" {
-            Mock -CommandName Get-GPResultantSetOfPolicy -MockWith {
-                Return 1
-            }
-            Get-GPResultantSetOfPolicyReport -User 'jsmith' -Computer 'jsmith-laptop' | Should -Be '1'
+    Context "Process" {
+        It "Should produce an error if the export path is greater than 260 characters" -Pending {
+        }
+    }
+    Context "Output" {
+        It "Should produce an HTML file" -Pending {
+        }
+        It "Should save the file in the current directory if not using the Path parameter" -Pending {
+        }
+        It "Should save the file in the Path parameter's value if using the Path parameter" -Pending {
+        }
+        It "Should have the date in the file name" -Pending {
+        }
+        It "Should have the User parameter's value in the file name" -Pending {
+        }
+        It "Should have the Computer parameter's value in the file name" -Pending {
+        }
+        It "Should have the Comment parameter's value in the file name if using the Comment parameter" -Pending {
         }
     }
 }
