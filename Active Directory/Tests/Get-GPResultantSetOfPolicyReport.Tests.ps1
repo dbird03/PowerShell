@@ -6,6 +6,9 @@ $sut = Split-Path $here -Parent
 . $sut\Get-GPResultantSetOfPolicyReport.ps1
 
 Describe "Get-GPResultantSetOfPolicyReport" {
+    It "Should work like a compiled cmdlet" {
+        (Get-Command Get-GPResultantSetOfPolicyReport | Select-Object CmdletBinding) | Should -BeTrue
+    }
     Context "Parameters" {
         It "User parameter should exist"  {
             Get-Command Get-GPResultantSetOfPolicyReport | Should -HaveParameter User
