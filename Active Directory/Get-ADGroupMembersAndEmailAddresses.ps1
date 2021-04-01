@@ -26,15 +26,21 @@ function Get-ADGroupMembersAndEmailAddresses {
     )
     
     process {
+        # Build hash table for Get-ADGroupMember
+        $GetADGroupMember = @{
+            Identity = $Identity
+        }
+        # If using the Recursive switch, add this to the hash table
         if ($PSBoundParameters.ContainsKey('Recursive')) {
-            $GroupMembers = Get-ADGroupMember -Identity $Identity -Recursive
+            $GetADGroupMember += @{Recursive = $True}
         }
-        else {
-            $GroupMembers = Get-ADGroupMember -Identity $Identity
-        }
-        
+        # Get group members
+        $GroupMembers = Get-ADGroupMember @GetADGroupMember
+
+        # Filter user objects from the group members
         $ADUsers = $GroupMembers | Where-Object {$_.objectClass -eq 'user'}
 
+        # Enumerate through each user object
         foreach ($ADUser in $ADUsers) {
             Get-ADUser -Identity $ADUser.SamAccountName -Properties proxyAddresses | Select-Object Name,SamAccountName,@{name='EmailAddress';expression={ ($_.proxyAddresses | Where-Object {$_ -clike "SMTP:*"}) -split "," -replace "SMTP:"  }}
         }
