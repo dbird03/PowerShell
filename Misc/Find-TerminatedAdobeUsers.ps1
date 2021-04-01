@@ -28,14 +28,14 @@ function Find-TerminatedAdobeUsers {
     begin {
         $AdobeUsers = Import-Csv -Path $AdobeUsersCsv
 
-        # Get BMTC email addresses
-        $BMTCUsers = Get-ADUser -Filter * -Properties proxyAddresses | Where-Object { ($_.proxyAddresses) }
-        $BMTCEmailAddresses = ($BMTCUsers.proxyAddresses | Where-Object {$_ -match "SMTP"}) -split "," -replace "SMTP:"
+        # Get AD users' email addresses
+        $ADUsers = Get-ADUser -Filter * -Properties proxyAddresses | Where-Object { ($_.proxyAddresses) }
+        $ADEmailAddresses = ($ADUsers.proxyAddresses | Where-Object {$_ -match "SMTP"}) -split "," -replace "SMTP:"
     }
     
     process {
         foreach ($AdobeUser in $AdobeUsers) {
-            If ($BMTCEmailAddresses -contains $AdobeUser.Email) {
+            If ($ADEmailAddresses -contains $AdobeUser.Email) {
                 $AdobeUser | Add-Member -Type 'NoteProperty' -Name 'Terminated' -Value 'No' -Force
             }
             Else {
