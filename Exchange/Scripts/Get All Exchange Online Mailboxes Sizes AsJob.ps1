@@ -1,0 +1,2 @@
+$ExchangeOnlineSession = Get-PSSession | Where-Object {($_.ConfigurationName -eq 'Microsoft.Exchange') -and ($_.ComputerName -eq 'outlook.office365.com')}
+Invoke-Command -Session $ExchangeOnlineSession -ScriptBlock {Get-Mailbox -ResultSize Unlimited | Select-Object Name,Alias,PrimarySmtpAddress,RecipientType,*Quota*} -AsJob -JobName "GetAllMailboxes"
